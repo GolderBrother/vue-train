@@ -1,0 +1,27 @@
+昨天的录播已经可以观看，课件也已上传Github
+
+
+【课件地址】https://github.com/zhufengpeixun/vue-train
+
+
+【文档地址】www.zhufengpeixun.cn/train/
+
+
+【上课地址】https://ke.qq.com/course/429677
+
+TODO:
+前端：
+自己写一遍：JWT认证
+http://www.zhufengpeixun.cn/train/vue-info/jwt.html#%E4%BD%BF%E7%94%A8vue-cli3-0%E5%88%9B%E5%BB%BAvue%E9%A1%B9%E7%9B%AE
+
+服务端：
+博客部署到服务器上
+
+2019.8.20
+看到 Vue单元测试
+
+2019.8.21
+看到 vue优化的Nuxt.js
+
+2019.8.22
+看到 vue+ts应用

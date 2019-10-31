@@ -1,0 +1,132 @@
+2019.8.13
+1.vue cli3.0项目结构介绍
+
+提交前代码规范校验
+yorkie,内部基于hasky(.git hook) 
+
+级联组件
+
+Cascader
+
+第一、点击切换
+第二、点击外面隐藏
+
+如果你希望对某个元素拥有一系列的操作，你可以封装一个指令(自定义指令)
+
+判断是否点击了外面
+v-click-outside
+
+// 指令是个方法(主要是用来操作DOM)
+directives: {
+    clickOutside: {
+	// 被绑定元素插入到DOM元素后执行
+	inserted(e, bindings, vnode) { // el真实的dom元素
+
+    	    bindings.value(); // value指的是绑定的close事件	
+	},
+	unbind(){
+	    
+	}
+    }
+}
+
+组件的props如果没有用，则默认绑定到标签的attr上
+
+指令单独抽出到指令文件夹中，然后直接引入进来，默认会自动加 v-xxx 前缀
+
+obj.js
+export default {
+    name: "james"
+}
+
+import obj from obj; => import { default as obj } from obj;
+解构的是默认导出的那个对象(名字是default)
+
+import {name} from obj;//不能这样解构
+
+vue核心：递归组件
+expor default {
+    // 递归组件必须要给自己起个名字，否则无法调用自己
+    name: "CascaderItem"
+}
+组件自己调用自己
+
+问题：
+最后一级没变
+
+父传子,子传孙
+
+通过一个层级变量level, 来给每个节点添加层级的标识
+每次选择节点的时候，需要通知父亲说，我改了，去更新
+
+需要把数据拷贝一份，把数据改好提交给父亲
+把复数句传递的属性拷贝一份，更改后，传递给父亲
+因为自组件不能修改父组件的数据
+import cloneDeep from 'lodash/cloneDeep'
+
+v-model => @input="input" :value="value"
+
+value的值需要一级一级传递下去，否则有问题
+
+点击的时候，需要先清空子孙级数据，否则会缓存上次的数据
+
+cloneValue.splice(this.level + 1);
+
+computed缓存
+computed是watch+缓存实现的
+watch的性能没有computed好
+
+点击的时候value会变
+
+支持异步
+获取点击的value,获取children并插入到子节点中
+递归构建树，深度，广度
+
+怎么知道点击的是哪一个？
+获取数组的最后一项，因为每次点击完，都会删除下一级数据
+这样的数组最后一项就是当前点击的那一项
+
+vue动态添加属性
+this.$set(this, key, value);
+
+需要在组件内部来处理
+
+vue hook跟react hook差不多
+
+async/await => io库+generator
+
+去树中如何找到当前id为这一项的人
+
+遍历，树可以采用深度或者广度遍历
+
+先查options,再添加
+
+// 语法糖
+this.$emit("update:")
+
+如果options变化了，没有更新视图，因为lists(value)没有依赖optios
+去自己的那一层找自己的儿子
+
+中心思想是：父跟子更新，都得让对方知道(通知)
+
+发包(上传)：
+package.json
+
+commonjs给node用的
+umd给浏览器用的
+
+nrm ls
+切换源的工具
+
+登录
+npm addUser
+
+发布
+npm publish
+
+使用：
+
+安装:
+yarn add xxx === npm install xxx -S
+
+vue api太多
